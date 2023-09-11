@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>DOSTune</title>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="stylesheet" href="dostune.css" type="text/css">
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <div id="top-panel">
+      <div class="control-buttons">
+        <button id="play-button" title="Play" type="button">&#9654;</button>
+      </div>
+      <div class="options">
+        <button id="new-tune-button">New Tune</button>
+        <button id="save-button">Save to File</button>
+        <button id="load-button">Load from File</button>
+        <div class="load-example-container">
+          <button id="load-example-button">Load Example:</button>
+          <select id="example-selector">
+          </select>
+        </div>
+      </div>
+    </div>
+    <template id="block-template">
+      <div class="block">
+        <div class="block-head">
+          <select class="block-type-selector">
+            <optgroup label="Music">
+              <option selected value="note">Note</option>
+              <option value="rest">Rest</option>
+              <option value="bpm">Tempo</option>
+            </optgroup>
+            <optgroup label="Raw">
+              <option value="hz">Raw Hz</option>
+              <option value="off">Silence</option>
+            </optgroup>
+            <optgroup label="Effects">
+              <option value="vibrato">Vibrato</option>
+              <option value="noise">Perturb</option>
+              <option value="bend">Pitch Bend</option>
+            </optgroup>
+          </select>
+          <div class="note-selector">
+            <select class="tone-selector" title="Tone">
+              <option selected value="C">C</option>
+              <option value="C#">C#</option>
+              <option value="D">D</option>
+              <option value="D#">D#</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+              <option value="F#">F#</option>
+              <option value="G">G</option>
+              <option value="G#">C#</option>
+              <option value="A">A</option>
+              <option value="A#">A#</option>
+              <option value="B">B</option>
+            </select>
+            <input class="octave-selector" title="Octave" type="number" value="4" step="1">
+          </div>
+          <div class="length-selector">
+            <input class="numerator" type="number" value="1">
+            /
+            <input class="denominator" type="number" value="16">
+          </div>
+          <label class="raw-hz" title="Pitch, in Hertz">
+            <input type="number" value="440.00">
+            Hz
+          </label>
+          <label class="raw-duration" title="Duration, in milliseconds">
+            <input type="number" value="500">
+            ms
+          </label>
+          <label class="vibrato-hz" title="Vibrato Rate, in Hz">
+            <input type="number" value="5">
+            Hz
+          </label>
+          <label class="semitones">
+            <input type="number" value="0.5" step="0.1">
+            semitones
+          </label>
+          <label class="bpm">
+            <input type="number" value="120">
+            bpm
+          </label>
+          <button class="delete-button" title="Delete">X</button>
+        </div>
+        <div class="block-body"></div>
+      </div>
+    </template>
+    <template id="add-block-button-template">
+      <button class="add-block-button">+</button>
+    </template>
+    <div id="blocks">
+
+    </div>
+    <script type="application/json" id="doh" data-title="Non-Prehistoric Cartoon Family">
+      [
+        {
+          "type": "vibrato",
+          "hz": 5,
+          "semitones": 0.5,
+          "commands": [
+            { "type":"note", "note":"C", "octave":3, "semiquavers":4 },
+            { "type":"note", "note":"E", "octave":3, "semiquavers":2 },
+            { "type":"note", "note":"F#", "octave":3, "semiquavers":2 },
+            { "type":"note", "note":"A", "octave":3, "semiquavers":1 },
+            { "type":"note", "note":"G", "octave":3, "semiquavers":3 },
+            { "type":"note", "note":"E", "octave":3, "semiquavers":2 },
+            { "type":"note", "note":"C", "octave":3, "semiquavers":2 },
+            { "type":"note", "note":"A", "octave":2, "semiquavers":1 },
+            { "type":"note", "note":"F#", "octave":2, "semiquavers":1 },
+            { "type":"note", "note":"F#", "octave":2, "semiquavers":1 },
+            { "type":"note", "note":"F#", "octave":2, "semiquavers":1 },
+            { "type":"note", "note":"G", "octave":2, "semiquavers":3 }
+          ]
+        }
+      ]
+    </script>
+    <script type="application/json" id="tcc" data-title="T.C.C.">
+      [
+        { "type":"note", "note":"C", "semiquavers":4 },
+        { "type":"note", "note":"F", "semiquavers":1 },
+        { "type":"note", "note":"F", "semiquavers":1 },
+        { "type":"note", "note":"F", "semiquavers":2 },
+        { "type":"note", "note":"F", "semiquavers":2 },
+        { "type":"note", "note":"C", "semiquavers":2 },
+        { "type":"note", "note":"D", "semiquavers":2 },
+        { "type":"note", "note":"D", "semiquavers":4 },
+      
+        { "type":"note", "note":"C", "semiquavers":2 },
+        { "type":"note", "note":"F", "semiquavers":2 },
+        { "type":"note", "note":"F", "semiquavers":2 },
+        { "type":"note", "note":"E", "semiquavers":2 },
+        { "type":"note", "note":"F", "semiquavers":2 },
+        { "type":"note", "note":"G", "semiquavers":4 },
+      
+        { "type":"note", "note":"C", "semiquavers":3 },
+        { "type":"note", "note":"A", "semiquavers":1 },
+        { "type":"note", "note":"A", "semiquavers":1 },
+        { "type":"note", "note":"A", "semiquavers":2 },
+        { "type":"note", "note":"G", "semiquavers":2 },
+        { "type":"note", "note":"G", "semiquavers":2 },
+        { "type":"note", "note":"F", "semiquavers":2 },
+        { "type":"note", "note":"F", "semiquavers":4 },
+      
+        { "type":"note", "note":"C", "semiquavers":2 },
+        { "type":"note", "note":"D", "semiquavers":2 },
+        { "type":"note", "note":"F", "semiquavers":1 },
+        { "type":"note", "note":"F", "semiquavers":1 },
+        { "type":"note", "note":"G", "semiquavers":2 },
+        { "type":"note", "note":"E", "semiquavers":2 },
+        { "type":"note", "note":"F", "semiquavers":4 }
+      ]
+    </script>
+    <script type="application/json" id="vader" data-title="Search Your Feelings">
+      [
+        { "type":"note", "note":"G", "octave":2, "semiquavers":3 },
+        { "type":"note", "note":"G", "octave":2, "semiquavers":3 },
+        { "type":"note", "note":"G", "octave":2, "semiquavers":3 },
+        { "type":"note", "note":"D#", "octave":2, "semiquavers":2 },
+        { "type":"note", "note":"A#", "octave":2, "semiquavers":1 },
+        { "type":"note", "note":"G", "octave":2, "semiquavers":3 },
+        { "type":"note", "note":"D#", "octave":2, "semiquavers":2 },
+        { "type":"note", "note":"A#", "octave":2, "semiquavers":1 },
+        { "type":"note", "note":"G", "octave":2, "semiquavers":4 }
+      ]
+    </script>
+    <script type="application/json" id="valk" data-title="Valkyries Must Be THIS Tall">
+      [
+        {
+          "type": "vibrato",
+          "hz": 8,
+          "semitones": 0.5,
+          "commands": [
+            { "type":"note", "note":"E", "octave":4, "semiquavers":2 },
+            { "type":"note", "note":"B", "octave":3, "semiquavers":0.7 },
+            { "type":"note", "note":"E", "octave":4, "semiquavers":1.3 },
+            { "type":"note", "note":"G", "octave":4, "semiquavers":4 },
+            { "type":"note", "note":"E", "octave":4, "semiquavers":4 },
+          
+            { "type":"note", "note":"G", "octave":4, "semiquavers":2 },
+            { "type":"note", "note":"E", "octave":4, "semiquavers":0.7 },
+            { "type":"note", "note":"G", "octave":4, "semiquavers":1.3 },
+            { "type":"note", "note":"B", "octave":4, "semiquavers":4 },
+            { "type":"note", "note":"G", "octave":4, "semiquavers":4 },
+          
+            { "type":"note", "note":"B", "octave":4, "semiquavers":2 },
+            { "type":"note", "note":"G", "octave":4, "semiquavers":0.7 },
+            { "type":"note", "note":"B", "octave":4, "semiquavers":1.3 },
+            { "type":"note", "note":"D", "octave":5, "semiquavers":4 },
+            { "type":"note", "note":"D", "octave":4, "semiquavers":4 },
+          
+            { "type":"note", "note":"G", "octave":4, "semiquavers":2 },
+            { "type":"note", "note":"D", "octave":4, "semiquavers":0.7 },
+            { "type":"note", "note":"G", "octave":4, "semiquavers":1.3 },
+            { "type":"note", "note":"B", "octave":4, "semiquavers":5.3 }
+          ]
+        }
+      ]
+    </script>
+    <script type="application/json" id="secret" data-title="It's a Secret to Everybody">
+      [
+        { "type":"note", "note":"G", "octave":5, "semiquavers":1 },
+        { "type":"note", "note":"F#", "octave":5, "semiquavers":1 },
+        { "type":"note", "note":"D#", "octave":5, "semiquavers":1 },
+        { "type":"note", "note":"A", "octave":4, "semiquavers":1 },
+        { "type":"note", "note":"G#", "octave":4, "semiquavers":1 },
+        { "type":"note", "note":"E", "octave":5, "semiquavers":1 },
+        { "type":"note", "note":"G#", "octave":5, "semiquavers":1 },
+        { "type":"note", "note":"C", "octave":6, "semiquavers":2 }
+      ]
+    </script>
+    <script type="application/json" id="rick" data-title="Richard Revolution">
+      [
+        { "type":"note", "note":"G", "octave":4, "semiquavers":1 },
+        { "type":"note", "note":"A", "octave":4, "semiquavers":1 },
+        { "type":"note", "note":"C", "octave":5, "semiquavers":1 },
+        { "type":"note", "note":"A", "octave":4, "semiquavers":1 },
+        { "type":"note", "note":"E", "octave":5, "semiquavers":3 },
+        { "type":"rest",                       "semiquavers":0.5 },
+        { "type":"note", "note":"E", "octave":5, "semiquavers":2.5 },
+        { "type":"rest",                       "semiquavers":0.5 },
+        { "type":"note", "note":"D", "octave":5, "semiquavers":4 }
+      ]
+    </script>
+    <script type="application/json" id="mario" data-title="Dawn of the Plumber">
+      [
+        { "type":"note", "note":"F", "octave":4, "semiquavers":1 },
+        { "type":"note", "note":"F", "octave":4, "semiquavers":1 },
+        { "type":"rest", "semiquavers":1 },
+        { "type":"note", "note":"F", "octave":4, "semiquavers":1 },
+        { "type":"rest", "semiquavers":1 },
+        { "type":"note", "note":"D", "octave":4, "semiquavers":1 },
+        { "type":"note", "note":"F", "octave":4, "semiquavers":1 },
+        { "type":"rest", "semiquavers":1 },
+        { "type":"note", "note":"A", "octave":4, "semiquavers":2 },
+        { "type":"rest", "semiquavers":2 },
+        { "type":"note", "note":"A", "octave":3, "semiquavers":2 }
+      ]
+    </script>
+  </body>
+</html>

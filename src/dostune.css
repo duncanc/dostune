@@ -1,0 +1,142 @@
+
+:root {
+  background: #000;
+  color: #fff;
+  font-family: sans-serif;
+}
+
+#sound-switch {
+  border-radius: 50%;
+  font-size: 128px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+#sound-switch::after {
+  content: '🔇';
+  text-shadow: 0 0 30px #0f0;
+}
+
+body.sound-enabled #sound-switch::after {
+  content: '🔊';
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  background: #efe;
+  border: 2px solid #8a8;
+  border-radius: 5px;
+  color: #000;
+  padding: 5px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.block-head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.delete-button {
+  background: #8a8;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+  margin: 0;
+  padding: 5px;
+}
+
+.octave-selector, .numerator, .denominator, .bpm input {
+  width: 3em;
+}
+
+input::-webkit-inner-spin-button {
+	opacity: 1;
+}
+
+input[type="number"] {
+  text-align: right;
+}
+
+.raw-hz input, .raw-duration input {
+  width: 5em;
+}
+
+.block:not(.mode-note) > .block-head > .note-selector,
+.block:not(.mode-note, .mode-rest) > .block-head > .length-selector,
+.block:not(.mode-hz) > .block-head > .raw-hz,
+.block:not(.mode-hz, .mode-off) > .block-head > .raw-duration,
+.block:not(.mode-vibrato) > .block-head > .vibrato-hz,
+.block:not(.mode-vibrato, .mode-noise, .mode-bend) > .block-head > .semitones,
+.block:not(.mode-vibrato, .mode-noise, .mode-bend, .mode-bpm) > .block-body,
+.block:not(.mode-bpm) > .block-head > .bpm {
+  display: none;
+}
+
+.block-body {
+  background: #000;
+  border: 2px solid #8a8;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+#top-panel {
+  position: sticky;
+  top: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid black;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+}
+
+.load-example-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.add-block-button {
+  border: 2px dashed #8a8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border-radius: 5px;
+  padding: 5px;
+  color: #8a8;
+  font-size: xx-large;
+  cursor: pointer;
+}
+
+.add-block-button:hover {
+  background-color: rgba(0,255,0,0.2);
+}
+
+#blocks {
+  display: flex;
+  flex-direction: column;
+}
+
+.length-selector, .note-selector {
+  display: flex;
+  align-items: stretch;
+}
+
+.control-buttons button {
+  font-size: xx-large;
+}
