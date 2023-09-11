@@ -200,6 +200,12 @@ export function playCommands(beeper: Beeper, cmds: BeeperCommand[], startTime: n
         beeper.vibratoAt(startTime, cmd.hz, cmd.semitones, refTime - startTime);
         break;
       }
+      case 'perturb': {
+        const startTime = refTime;
+        refTime = playCommands(beeper, cmd.commands, startTime, bpm);
+        beeper.noiseAt(startTime, cmd.semitones, refTime - startTime);
+        break;
+      }
     }
   }
   return refTime;
