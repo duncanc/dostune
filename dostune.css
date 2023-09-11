@@ -72,8 +72,8 @@ input[type="number"] {
 .block:not(.mode-hz) > .block-head > .raw-hz,
 .block:not(.mode-hz, .mode-off) > .block-head > .raw-duration,
 .block:not(.mode-vibrato) > .block-head > .vibrato-hz,
-.block:not(.mode-vibrato, .mode-noise, .mode-bend) > .block-head > .semitones,
-.block:not(.mode-vibrato, .mode-noise, .mode-bend, .mode-bpm) > .block-body,
+.block:not(.mode-vibrato, .mode-perturb, .mode-bend) > .block-head > .semitones,
+.block:not(.mode-vibrato, .mode-perturb, .mode-bend, .mode-bpm) > .block-body,
 .block:not(.mode-bpm) > .block-head > .bpm {
   display: none;
 }
